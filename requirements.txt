@@ -2,14 +2,21 @@ altgraph==0.17.3
 certifi==2023.5.7
 charset-normalizer==3.1.0
 colorama==0.4.6
+coverage==7.2.7
 et-xmlfile==1.1.0
 idna==3.4
+iniconfig==2.0.0
 numpy==1.24.3
 openpyxl==3.1.2
+packaging==23.1
 pandas==2.0.1
 pefile==2023.2.7
+pluggy==1.0.0
 pyinstaller==5.11.0
 pyinstaller-hooks-contrib==2023.3
+PyMuPDF==1.22.3
+pytest==7.3.1
+pytest-cov==4.1.0
 python-dateutil==2.8.2
 pytz==2023.3
 pywin32==306
@@ -19,4 +26,3 @@ six==1.16.0
 tqdm==4.65.0
 tzdata==2023.3
 urllib3==2.0.2
-xlwings==0.30.6
