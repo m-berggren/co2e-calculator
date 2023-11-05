@@ -1,0 +1,11 @@
+# Optimized
+__pycache__/
+
+# PyInstaller
+.spec
+.manifest
+dist/
+build/
+
+# Environment
+venv
