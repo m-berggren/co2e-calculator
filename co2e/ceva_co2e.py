@@ -1,4 +1,5 @@
 import json
+import re
 
 import pandas as pd
 import requests
@@ -13,27 +14,28 @@ class CevaCO2e:
         self.df = df
         
 
-    def get_unlocodes(self):
+    def get_unlocodes(self) -> tuple:
         df = self.df
 
         """ Check if Port of loading (UNLOCODE) exists in Dataframe['UNLOCODE'].
         If not then search for Port name in Dataframe['NAME'] and get UNLOCODE.
         """
         
-        if self.pol.lower() in set(df.UNLOCODE.str.lower()):
+        if self.pol.upper() in set(df.UNLOCODE):
             pol = [self.pol] #  Enclosed in [] to mimic falsy value
         else:
-            pol = df.loc[df.NAME == self.pol, 'UNLOCODE'].values
+            pol = df.loc[df.NAME.str.contains(self.pol, flags=re.IGNORECASE), 'UNLOCODE'].values
+            #pol = df.loc[df.NAME == self.pol, 'UNLOCODE'].values
 
-        if self.pod in set(df.UNLOCODE.str.lower()):
+        if self.pod.upper() in set(df.UNLOCODE):
             pod = [self.pod] #  Enclosed in [] to mimic falsy value
         else:
-            pod = df.loc[df.NAME == self.pod, 'UNLOCODE'].values
+            pod = df.loc[df.NAME.str.contains(self.pod, flags=re.IGNORECASE), 'UNLOCODE'].values
 
         return pol, pod
 
 
-    def parse_info(self) -> str:
+    def parse_info(self) -> bytes|None:
 
         """ Will parse website differently depending on if Air shipment or Sea.
         """
@@ -70,7 +72,7 @@ class CevaCO2e:
         return response.content
 
 
-    def response(self) -> float:
+    def response(self) -> float|None:
         string = self.parse_info()
 
         if not string:

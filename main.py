@@ -5,17 +5,17 @@ import pandas as pd
 from tqdm import tqdm
 import xlwings as xw
 
-from filedialog_window import open_filedialog
-from classes_co2e import CevaCO2e
+from co2e.filedialog_window import open_filedialog
+from co2e.ceva_co2e import CevaCO2e
 
 
 def main():
 
     file = open_filedialog()
 
-    config_file = r"bin\variables.ini"
+    CONFIG_FILE = r"bin\variables.ini"
     config = configparser.ConfigParser()
-    config.read(config_file)
+    config.read(CONFIG_FILE)
     cfg = config['EXCEL COLUMN NAMES']
     
     POL = cfg['port-of-loading-column']
@@ -56,8 +56,8 @@ def main():
             # Filter NA values
             filtered_df = filter_df(df, CO2E_COL, **dict_of_keys)
 
-            list_of_co2e = []
             # Look up values on web
+            list_of_co2e = []
             for values in tqdm(
                 filtered_df.values, desc="Inner loop", position=1, leave=False
             ):
