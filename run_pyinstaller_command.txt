@@ -1,1 +1,1 @@
-pyinstaller calculate_co2e.py --hidden-import openpyxl.cell._writer --onefile --name Polarium-co2e-calculator-Executable
+pyinstaller run_main.py --hidden-import openpyxl.cell._writer --onefile --name Polarium-co2e-calculator-Executable

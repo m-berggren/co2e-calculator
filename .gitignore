@@ -2,10 +2,12 @@
 __pycache__/
 
 # PyInstaller
+.exe
 .spec
 .manifest
 dist/
 build/
+output/
 
 # Environment
 venv
