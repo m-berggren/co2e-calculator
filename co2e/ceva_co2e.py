@@ -50,7 +50,7 @@ class CevaCO2e:
             # IATA airport codes are 3 letters long
             if len(self.pol) == 3 and len(self.pod) == 3:
                 weight = self.weight
-                url = f"https://my.cevalogistics.com/api/wso2/proxy/searoutes/co2emissions/1.0.0/air?fromIata={self.pol}&toIata={self.pod}&weight={weight}"
+                url = f"https://my.cevalogistics.com/api/wso2/proxy/searoutes/co2emissions/2.0.0/direct/air?aircraftType=UNKNOWN&fromIata={self.pol}&toIata={self.pod}&weight={weight}"
 
             else:
                 return None
@@ -58,11 +58,11 @@ class CevaCO2e:
         else:
             pol, pod = self.get_unlocodes()
 
-            if pol and pod:
+            if (pol and pod).any():
                 # Divide by 1000 for tonne and 10 for 1 TEU eq.
                 weight = self.weight / 10_000
                 
-                url = f"https://my.cevalogistics.com/api/wso2/proxy/searoutes/co2emissions/1.0.0/sea?fromLocode={pol[0]}&toLocode={pod[0]}&nContainers={weight}&containerSize=20"
+                url = f"https://my.cevalogistics.com/api/wso2/proxy/searoutes/co2emissions/2.0.0/direct/sea?fromLocode={pol[0]}&toLocode={pod[0]}&nContainers={weight}&containerSize=20"
                 
             else:
                 return None
