@@ -11,3 +11,6 @@ output/
 
 # Environment
 venv
+
+# .env file
+.env

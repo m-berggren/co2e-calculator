@@ -1,9 +1,15 @@
+from dotenv import load_dotenv
 import json
+import os
 import re
 
 import pandas as pd
 import requests
 
+load_dotenv()
+
+# Environment variables
+URL = os.getenv('URL')
 
 class CevaCO2e:
     def __init__(self, pol: str, pod: str, transport: str, weight: float, df: pd.DataFrame) -> None:
@@ -12,7 +18,7 @@ class CevaCO2e:
         self.pod = pod.strip()
         self.weight = weight
         self.df = df
-        
+
 
     def get_unlocodes(self) -> tuple:
         df = self.df
@@ -20,7 +26,7 @@ class CevaCO2e:
         """ Check if Port of loading (UNLOCODE) exists in Dataframe['UNLOCODE'].
         If not then search for Port name in Dataframe['NAME'] and get UNLOCODE.
         """
-        
+
         if self.pol.upper() in set(df.UNLOCODE):
             pol = [self.pol] #  Enclosed in [] to mimic falsy value
         else:
@@ -50,7 +56,7 @@ class CevaCO2e:
             # IATA airport codes are 3 letters long
             if len(self.pol) == 3 and len(self.pod) == 3:
                 weight = self.weight
-                url = f"https://my.cevalogistics.com/api/wso2/proxy/searoutes/co2emissions/2.0.0/direct/air?aircraftType=UNKNOWN&fromIata={self.pol}&toIata={self.pod}&weight={weight}"
+                url = f"{URL}/air?aircraftType=UNKNOWN&fromIata={self.pol}&toIata={self.pod}&weight={weight}"
 
             else:
                 return None
@@ -61,9 +67,9 @@ class CevaCO2e:
             if (pol and pod).any():
                 # Divide by 1000 for tonne and 10 for 1 TEU eq.
                 weight = self.weight / 10_000
-                
-                url = f"https://my.cevalogistics.com/api/wso2/proxy/searoutes/co2emissions/2.0.0/direct/sea?fromLocode={pol[0]}&toLocode={pod[0]}&nContainers={weight}&containerSize=20"
-                
+
+                url = f"{URL}/sea?fromLocode={pol[0]}&toLocode={pod[0]}&nContainers={weight}&containerSize=20"
+
             else:
                 return None
 

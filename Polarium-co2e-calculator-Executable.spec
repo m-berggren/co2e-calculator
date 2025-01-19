@@ -28,7 +28,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='Polarium-co2e-calculator-Executable',
+    name='co2e-calculator-Executable',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

@@ -1,10 +1,15 @@
+from dotenv import load_dotenv
 import os
 import tkinter as tk
 from tkinter import filedialog
 
+load_dotenv()
+
+FILE_DIR = os.getenv('FILE_DIR')
+
 def file_dir():
     home = os.path.expanduser('~')
-    file_dir = r"BOLLORE\Polarium - Documents"
+    file_dir = FILE_DIR
     return os.path.join(home, file_dir)
 
 
